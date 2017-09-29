@@ -1,4 +1,4 @@
-Bayesian Psychometric \n
+Bayesian Psychometric 
 Curve Fitting package for Python and STAN
 ====================================
 
