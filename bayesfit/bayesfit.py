@@ -12,13 +12,13 @@ import warnings
 from copy import deepcopy 
 import scipy as sc 
 import pystan as ps 
-import statsmodels.api as sm
+import pandas as pd
 
 # Define wrapper function
 def bayesfit(data, optin):
 
     # Check data structure inputted and convert to format required if possible
-    # Format requested is a N x 3 matrix such that [x, y, N]
+    # Format requested is a N x 3 data frame such that [x, y, N]
     if data.shape[1] != 3:
         raise Exception('Data provided does not contain the number of columns required! (i.e., [x, y, N])') 
 
@@ -38,23 +38,31 @@ def bayesfit(data, optin):
     if not('fit' in options.keys()):
         options['fit'] = 'auto'
     # Check sigmoid type provided to convert to logspace where necessary 
-    if options['sigmoidType'] in ['Weibull','weibull']:
-        options['logspace'] = 1
-        assert min(data[:,0]) > 0, 'The sigmoid you specified is not defined for negative data points!'
-    else:
-        options['logspace'] = 0
+#    if options['sigmoidType'] in ['Weibull','weibull']:
+#        options['logspace'] = 1
+#        assert min(data[:,0]) > 0, 'The sigmoid you specified is not defined for negative data points!'
+#    else:
+#        options['logspace'] = 0
 
     # File that performs main computation
-    output = bayesfit_main(data,options)
+    output = bayesfit_build(data,options)
         
-    return output
+    return fit
 
 
 # Define core fitting 
-def bayesfit_main(data,options):
+def bayesfit_build(data,options):
     
-    gamma = 1/options['nAFC']
-
+    # Convert from average to numerical 1 and 0 sequence
+    df = pd.DataFrame([],columns=['x','y']) 
+    for i in range(len(data.x)):
+        approx_numsequence = np.round(data.y[i]*data.N[i])   
+        response_y = np.zeros(data.N[i])
+        response_y[:int(approx_numsequence)] = 1
+        response_x = np.repeat(data.x[i],data.N[i])
+        tmp_df = pd.DataFrame(np.column_stack((response_x,response_y)), columns=['x','y'])
+        df = df.append(tmp_df)
+    
     model_definition = dict()
     if options['fit'] == 'auto':
         model_definition['data'] = '''
@@ -78,20 +86,18 @@ def bayesfit_main(data,options):
                 }'''
         # Get initial estimate of alpha via linear regression
         def alpha_est(data,options):
-            if options['fit'] == 'auto':
-            y = [data[0,1], data[len(data[:,1]),1]]
-            x = [data[0,0], data[len(data[:,0]),0]] 
+            y = [data.y[0], data.y[data.y.shape[0]-1]]
+            x = [data.x[0], data.x[data.x.shape[0]-1]] 
             init_alpha = np.polyfit(x, y, 1)
             alpha_estimate = [(0.70 - init_alpha[1]) / init_alpha[0]]
-            return alpha_estimate  
+            return alpha_estimate[0]
         # Use function to obtain estimate of alpha     
         alpha_guess = alpha_est(data, options)
 
         # Set up likelihoods 
         model_definition['likelihood_start'] = '''        
             model {'''
-        model_definition['likelihood_alpha'] = 
-            ('''alpha ~ normal(%f,3);''' %(alpha))
+        model_definition['likelihood_alpha'] = ('''alpha ~ normal(%f,3);''' %(alpha_guess))
         model_definition['likelihood_beta'] = '''   
             beta ~ normal(3,5);'''
         # This section is repeated for interpretability     
@@ -102,50 +108,27 @@ def bayesfit_main(data,options):
             model_definition['likelihood_lambda'] = '''  '''  
 
         # Define Bernoulli distro
-        model_definition['likelihood_start'] = '''
+        # Define gamma
+        gamma = 1/options['nAFC']
+        
+        model_definition['likelihood_model_start'] = '''
             for (i in 1:N){'''
-        if options['lapse'] == True:
-            model_definition['likelihood_middle'] =     
-            (''' y[i] ~ bernoulli(%f + (1-lambda-%f)*weibull_cdf(x[i],beta, alpha));} ''' %(gamma, gamma))
-        else:
-        model_definition['likelihood_end'] = ''' } '''
+        model_definition['likelihood_model_middle'] = (''' y[i] ~ bernoulli(%f + (1-lambda-%f)*weibull_cdf(x[i],beta, alpha));} ''' %(gamma, gamma))
+        model_definition['likelihood_model_end'] = ''' } '''
 
         # Combine full model together
-        model_definition['full_model'] = model_definition['data'] + 
-            model_definition['parameters'] + 
-            model_definition['likelihood_start'] + 
-            model_definition['likelihood_alpha'] + 
-            model_definition['likelihood_beta'] + 
-            model_definition['likelihood_lambda'] + 
-            model_definition['likelihood_start'] +
-            model_definition['likelihood_middle'] +
-            model_definition['likelihood_end'] +
+        model_definition['full_model'] = model_definition['data'] + model_definition['parameters'] + model_definition['likelihood_start'] + model_definition['likelihood_alpha'] + model_definition['likelihood_beta'] + model_definition['likelihood_lambda'] + model_definition['likelihood_model_start'] +model_definition['likelihood_model_middle'] + model_definition['likelihood_model_end'] 
 
-    # Pool data types together 
-    data_dict = {'N': data[1,2],'x': data[:,0],'y': data[:,1]}
-    fit = ps.stan(model_code = model_definition['full_model'], data=data_dict, iter=1000, chains=1)  
-    
+    # Convert data frame above to list 
+    x = [int(i) for i in pd.Series.tolist(df.x)]
+    y = [int(i) for i in pd.Series.tolist(df.y)]
+    data_model= {'N': len(df.x),'x': x,'y': y}
+    model = ps.StanModel(model_code = model_definition['full_model']) 
+    fit = model.sampling(data=data_model, iter=1000, chains=1)
 
-
-x1 = np.array([1,2,3,4,5])        
-x = np.repeat(x1,5)
-y = np.array([1,0,0,0,0,0,1,0,0,0,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1])
-y1 = [0.2,0.2,0.8,0.8,1]
-
-
-        
-
-    
     
 
 
     
     
-    
-    
-    
-    
-    
-    
-        
   
