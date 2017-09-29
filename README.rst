@@ -1,4 +1,5 @@
-Bayesian Curve Fitting package for Python and STAN
+Bayesian Psychometric \n
+Curve Fitting package for Python and STAN
 ====================================
 
 .. image:: https://github.com/SlugocM/bayesfit/blob/master/logo.png
