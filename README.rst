@@ -1,1 +1,3 @@
-## Bayesian Curve Fitting package for Python and STAN
+========
+Bayesian Curve Fitting package for Python and STAN
+========
