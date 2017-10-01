@@ -47,3 +47,7 @@ NOT RECOMMENDED BUT POSSIBLE: Alternatively, if required packages are already in
    git clone --recursive https://github.com/slugocm/bayesfit.git
    cd bayesfit
    python setup.py install
+
+.. |pypi| image:: https://badge.fury.io/py/bayesfit.png
+    :target: https://badge.fury.io/py/bayesfit
+    :alt: pypi version
