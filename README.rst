@@ -23,13 +23,10 @@ Important links
 Basic Installation [OSX/ WINDOWS]
 ------------------
 
-A number of packages are required: 
-`NumPy  <http://www.numpy.org/>`_
-`Cython <http://www.cython.org/>`_
+Packages required: 
 `PyStan <http://mc-stan.org/users/interfaces/pystan>`_
 `Scipy <https://www.scipy.org/>`_
 `Pandas <http://pandas.pydata.org/>`_
-`matplotlib <http://matplotlib.org/>`_
 `seaborn <https://seaborn.pydata.org/>`_
 
 
