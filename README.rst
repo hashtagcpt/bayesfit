@@ -51,3 +51,7 @@ NOT RECOMMENDED BUT POSSIBLE: Alternatively, if required packages are already in
 .. |pypi| image:: https://badge.fury.io/py/bayesfit.png
     :target: https://badge.fury.io/py/bayesfit
     :alt: pypi version
+    
+.. |travis| image:: https://travis-ci.org/slugocm/bayesfit.png?branch=master
+    :target: https://travis-ci.org/slugocm/bayesfit
+    :alt: travis-ci build status
