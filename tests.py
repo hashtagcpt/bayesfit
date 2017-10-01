@@ -5,6 +5,8 @@ Created on Fri Sep 29 21:21:23 2017
 @author: MetalHorse
 """
 
+import bayesfit as bayesfit
+import pandas as pd
 
 # Import data as data frame into working environment using pandas
 data = pd.read_csv('data.csv')
