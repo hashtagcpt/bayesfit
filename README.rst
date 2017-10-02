@@ -43,7 +43,7 @@ Packages required (versions specified in requirements.txt):
 
    pip install bayesfit
 
-NOT RECOMMENDED BUT POSSIBLE: Alternatively, if required packages are already installed on your system, BayesFit can be installed via:
+**_Not recommended but possible_**: Alternatively, if required packages are already installed on your system, BayesFit can be installed via:
 
 ::
 
