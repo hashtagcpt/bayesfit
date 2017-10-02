@@ -11,7 +11,7 @@ Bayesian Psychometric Curve Fitting tool using STAN
 
 Important links
 ---------------
-- Use documentation: https://slugocm.ca/BayesFit
+- Use documentation: https://slugocm.ca/BayesFit or see below.
 - Source code repository: https://github.com/slugocm/bayesfit
 - Issue tracker: https://github.com/slugocm/bayesfit/issues
 
@@ -46,12 +46,21 @@ NOT RECOMMENDED BUT POSSIBLE: Alternatively, if required packages are already in
    python setup.py install
 
 
-Example of use [Windows]
+Additional installation instructions [Windows]
+------------------
+
+
+
+Example 
 ------------------
 .. code-block:: python
-    :linenos:
-data = pd.read_csv('data.csv')
+   :linenos:
 
+    # Import data as data frame into working environment using pandas
+    data = pd.read_csv('data.csv')
+    
+    # Initialize options variable as dictionary type
+    options = dict()
 
 
 
