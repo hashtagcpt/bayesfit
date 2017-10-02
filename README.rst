@@ -45,6 +45,20 @@ NOT RECOMMENDED BUT POSSIBLE: Alternatively, if required packages are already in
    cd bayesfit
    python setup.py install
 
+
+Example of use [Windows]
+------------------
+.. code-block:: python
+    :linenos:
+    
+# Import data as data frame into working environment using pandas
+data = pd.read_csv('data.csv')
+
+# Initialize options variable as dictionary type
+options = dict()
+
+
+
 .. |pypi| image:: https://badge.fury.io/py/bayesfit.png
     :target: https://badge.fury.io/py/bayesfit
     :alt: pypi version
