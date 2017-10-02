@@ -56,7 +56,7 @@ Additional installation instructions [Windows]
 ------------------
 If you have not already, please complete the basic installation step first.
 
-Next, to to the directory where pystan is installed.  For most using the Anaconda Python distribution environment, this will be located along the lines of **.../Anaconda3/Lib/site-packages/pystan/**.  There will be a file within this folder named ***model.py***.  Open this file and comment out lines 286-287, from:
+Next, to to the directory where pystan is installed.  For most using the Anaconda Python distribution environment, this will be located along the lines of **.../Anaconda3/Lib/site-packages/pystan/**.  There will be a file within this folder named **model.py**.  Open this file and comment out lines 286-287, from:
 ::
     if platform.platform().startswith('Win'):
         extra_compile_args = ['/EHsc', '-DBOOST_DATE_TIME_NO_LIB']
@@ -81,7 +81,7 @@ Now under your Anaconda directory go to **.../Anaconda3/Lib/distutils/** folder 
     [build]
     compiler=mingw32
 
-Try running the basic demo script now.  If you receive an error along the lines of **"MS VS COMPILER ..."**, please follow this final step. Under the earlier directory **.../Anaconda3/Lib/distutils/** locate a file ***cygwinccompiler.py***, and comment out lines: 157; 160; 325.  Save the file, and restart your Python session.  Everything should work now.    
+Try running the basic demo script now.  If you receive an error along the lines of **"MS VS COMPILER ..."**, please follow this final step. Under the earlier directory **.../Anaconda3/Lib/distutils/** locate a file **cygwinccompiler.py**, and comment out lines: 157; 160; 325.  Save the file, and restart your Python session.  Everything should work now.    
 
 
 
