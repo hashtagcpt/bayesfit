@@ -68,16 +68,16 @@ to:
 Unfortuntely, there are some compiler errors that may arise when running the BayesFit with Python on windows.  These errors mainly arise from pystan, and its requirement for compiling models in C++ code for use with Stan.  Please carefully follow the steps below, and ensure you are using Python version 3.5 or newer. The first steps also make use of Anaconda Python distribution environment. In your command-prompt, or Anaconda prompt type: 
 
 ::
-   conda install libpython
-   conda install -c mysys2 m2w64-toolchain=5.3.0
+    conda install libpython
+    conda install -c mysys2 m2w64-toolchain=5.3.0
    
 Now under your Anaconda directory go to **.../Anaconda3/Lib/distutils/** folder and see if a file labelled **distutils.cfg** exists.  If not, create such a file under this directory with the following code:
 
 ::
-   [build]
-   compiler=mingw32
+    [build]
+    compiler=mingw32
 
-Try running the basic demo script now.  If you receive an error along the lines of **"MS VS COMPILER ..."**, please follow this final step. Under the earlier directory **.../Anaconda3/Lib/distutils/** locate a file *cygwinccompiler.py*, and comment out lines: 157; 160; 325.  Save the file, and restart your Python session.  Everything should work now.    
+Try running the basic demo script now.  If you receive an error along the lines of **"MS VS COMPILER ..."**, please follow this final step. Under the earlier directory **.../Anaconda3/Lib/distutils/** locate a file ***cygwinccompiler.py***, and comment out lines: 157; 160; 325.  Save the file, and restart your Python session.  Everything should work now.    
 
 
 
