@@ -26,7 +26,7 @@ Important links
 Basic Installation [Linux/ Windows/ macOS]
 ------------------
 
-|biohazard| **WINDOWS USERS:** 
+**WINDOWS USERS:** 
 **PLEASE READ ADDITIONAL INSTALLATION INSTRUCTIONS TO SAVE YOU HEADACHES!**
 
 Packages required (versions specified in requirements.txt): 
@@ -54,6 +54,30 @@ NOT RECOMMENDED BUT POSSIBLE: Alternatively, if required packages are already in
 
 Additional installation instructions [Windows]
 ------------------
+If you have not already, please complete the basic installation step first.
+
+Next, to to the directory where pystan is installed.  For most using the Anaconda Python distribution environment, this will be located along the lines of **...\Anaconda3\Lib\site-packages\pystan\**.  There will be a file within this folder named *model.py*.  Open this file and comment out lines 286-287, from:
+::
+             if platform.platform().startswith('Win'):
+                 extra_compile_args = ['/EHsc', '-DBOOST_DATE_TIME_NO_LIB']
+to:
+::
+            # if platform.platform().startswith('Win'):
+            #     extra_compile_args = ['/EHsc', '-DBOOST_DATE_TIME_NO_LIB']
+
+Unfortuntely, there are some compiler errors that may arise when running the BayesFit with Python on windows.  These errors mainly arise from pystan, and its requirement for compiling models in C++ code for use with Stan.  Please carefully follow the steps below, and ensure you are using Python version 3.5 or newer. The first steps also make use of Anaconda Python distribution environment. In your command-prompt, or Anaconda prompt type: 
+
+::
+   conda install libpython
+   conda install -c mysys2 m2w64-toolchain=5.3.0
+   
+Now under your Anaconda directory go to **...\Anaconda3\Lib\distutils\** folder and see if a file labelled **distutils.cfg** exists.  If not, create such a file under this directory with the following code:
+
+::
+    [build]
+    compiler=mingw32
+
+Try running the basic demo script now.  If you receive an error along the lines of **"MS VS COMPILER ..."**, please follow this final step. Under the earlier directory **...\Anaconda3\Lib\distutils\** locate a file *cygwinccompiler.py*, and comment out lines: 157; 160; 325.  Save the file, and restart your Python session.  Everything should work now.    
 
 
 
