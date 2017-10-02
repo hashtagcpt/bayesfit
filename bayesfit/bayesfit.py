@@ -48,7 +48,9 @@ def bayesfit_build(data, options):
         assert False, 'Options provided are not those made available by module. Revise options provided.'        
     if options['sigmoidType'] != 'cnorm' and 'logistic' and 'cauchy' and 'gumbel' and 'weibull' == False:
         assert False, 'Options provided are not those made available by module. Revise options provided.'                
-        
+    if isinstance(options['nAFC'], (int, float, complex)) == False:
+        assert False, 'Please provide a numerical argument for options["nAFC"].'
+
     # File that performs main computation
     output = bayesfit_compile(data,options)
         
@@ -204,7 +206,7 @@ def bayesfit(data, options, model):
 
 
 
-def bayesfit_extract(data, fit, options):
+def bayesfit_extract(data, options, fit):
     
     if not('param_ests' in options.keys()):
         options['param_ests'] = 'mean'
@@ -212,17 +214,35 @@ def bayesfit_extract(data, fit, options):
         options['thresholdPC'] = .75
     if not('nAFC' in options.keys()):
         options['nAFC'] = 2
-
-    # Check arguments provided are numerical for threshold 
+    if not('sigmoidType' in options.keys()):
+        options['sigmoidType'] = 'weibull'
+    if not('lapse' in options.keys()):
+        options['lapse'] = True
+    
+    # Check arguments provided are numerical for threshold
     if options['param_ests'] != 'mean' == False:
         assert False, 'Options provided are not those made available by module. Revise options provided.'
     if isinstance(options['thresholdPC'], (int, float, complex)) == False:
         assert False, 'Please provide a numerical argument for options["thresholdPC"].'
+    if isinstance(options['nAFC'], (int, float, complex)) == False:
+        assert False, 'Please provide a numerical argument for options["nAFC"].'
+    if options['sigmoidType'] != 'cnorm' and 'logistic' and 'cauchy' and 'gumbel' and 'weibull' == False:
+        assert False, 'Options provided are not those made available by module. Revise options provided.'
+    if options['lapse'] != True and False == False:
+        assert False, 'Options provided are not those made available by module. Revise options provided.'
 
+    # Define gamma
     if options['nAFC'] == 0:
         gamma = 0
     else:
         gamma = 1/options['nAFC']
+
+    # Define lambda
+    if options['lapse'] = True:
+        lamb = params['lambda'][0]
+    elif: options['lapse'] = False:
+        lamb = 0
+
     # Extract summary table
     fit_summary = fit.summary()
     # Extract summary of mean estimates for parameters
@@ -231,31 +251,41 @@ def bayesfit_extract(data, fit, options):
     # Extract threshold 
     x = np.linspace(data.x.min(),data.x.max(),1000)
     if options['sigmoidType'] == 'cnorm':  
-        y_pred = gamma + (1-params['lambda'][0]-gamma)*sc.stats.norm.cdf(x,params['mu'][0],params['sigma'][0]) 
+        y_pred = gamma + (1-lamb-gamma)*sc.stats.norm.cdf(x,params['mu'][0],params['sigma'][0])
     elif options['sigmoidType'] == 'cauchy': 
-        y_pred = gamma + (1-params['lambda'][0]-gamma)*sc.stats.cauchy.cdf(x,params['mu'][0],params['sigma'][0])  
+        y_pred = gamma + (1-lamb-gamma)*sc.stats.cauchy.cdf(x,params['mu'][0],params['sigma'][0])
     elif options['sigmoidType'] == 'logistic':    
-        y_pred = gamma + (1-params['lambda'][0]-gamma)*sc.stats.logistic.cdf(x,params['mu'][0],params['sigma'][0]) 
+        y_pred = gamma + (1-lamb-gamma)*sc.stats.logistic.cdf(x,params['mu'][0],params['sigma'][0])
     elif options['sigmoidType'] == 'gumbel':
-        y_pred = gamma + (1-params['lambda'][0]-gamma)*(1-np.exp(10**(params['beta'][0]*(x - params['mu'][0]) ))) 
+        y_pred = gamma + (1-lamb-gamma)*(1-np.exp(10**(params['beta'][0]*(x - params['mu'][0]) )))
     elif options['sigmoidType'] == 'weibull':    
-        y_pred = gamma + (1-params['lambda'][0]-gamma)* (1 - np.exp(-((x/params['alpha'][0])**params['beta'][0]))) 
+        y_pred = gamma + (1-lamb-gamma)* (1 - np.exp(-((x/params['alpha'][0])**params['beta'][0])))
     
     threshold = np.interp(options['thresholdPC'], y_pred, x)
     
     return params, threshold
     
     
-def bayesfit_plot(data, fit, params, options):
+def bayesfit_plot(data, options, fit, params):
     
     if not('plot' in options.keys()):
         options['plot'] = 'cdf'
     if not('nAFC' in options.keys()):
-        options['nAFC'] = 2 
-    
+        options['nAFC'] = 2
+    if not('sigmoidType' in options.keys()):
+        options['sigmoidType'] = 'weibull'
+    if not('lapse' in options.keys()):
+        options['lapse'] = True
+
+    if isinstance(options['nAFC'], (int, float, complex)) == False:
+        assert False, 'Please provide a numerical argument for options["nAFC"].'
+    if options['sigmoidType'] != 'cnorm' and 'logistic' and 'cauchy' and 'gumbel' and 'weibull' == False:
+        assert False, 'Options provided are not those made available by module. Revise options provided.'
     if options['plot'] != 'cdf' and 'density' and '2D_density' and 'trace' == False:
         assert False, 'Options for PLOT provided are not those made available by module. Revise options provided.'
-        
+    if options['lapse'] != True and False == False:
+        assert False, 'Options provided are not those made available by module. Revise options provided.'
+
     # Get parameter labels
     x_labels = list(params.columns.values)  
         
@@ -264,19 +294,25 @@ def bayesfit_plot(data, fit, params, options):
         gamma = 0
     else:
         gamma = 1/options['nAFC']
-        
+
+    # Define lambda
+    if options['lapse'] = True:
+        lamb = params['lambda'][0]
+    elif: options['lapse'] = False:
+        lamb = 0
+
     if options['plot'] == 'cdf':
         x = np.linspace(data.x.min(),data.x.max(),1000)
         if options['sigmoidType'] == 'cnorm':  
-            y_pred = gamma + (1-params['lambda'][0]-gamma)*sc.stats.norm.cdf(x,params['mu'][0],params['sigma'][0]) 
+            y_pred = gamma + (1-lamb-gamma)*sc.stats.norm.cdf(x,params['mu'][0],params['sigma'][0])
         elif options['sigmoidType'] == 'cauchy': 
-            y_pred = gamma + (1-params['lambda'][0]-gamma)*sc.stats.cauchy.cdf(x,params['mu'][0],params['sigma'][0])  
+            y_pred = gamma + (1-lamb-gamma)*sc.stats.cauchy.cdf(x,params['mu'][0],params['sigma'][0])
         elif options['sigmoidType'] == 'logistic':    
-            y_pred = gamma + (1-params['lambda'][0]-gamma)*sc.stats.logistic.cdf(x,params['mu'][0],params['sigma'][0]) 
+            y_pred = gamma + (1-lamb-gamma)*sc.stats.logistic.cdf(x,params['mu'][0],params['sigma'][0])
         elif options['sigmoidType'] == 'gumbel':
-            y_pred = gamma + (1-params['lambda'][0]-gamma)*(1-np.exp(10**(params['beta'][0]*(x - params['mu'][0]) ))) 
+            y_pred = gamma + (1-lamb-gamma)*(1-np.exp(10**(params['beta'][0]*(x - params['mu'][0]) )))
         elif options['sigmoidType'] == 'weibull':    
-            y_pred = gamma + (1-params['lambda'][0]-gamma)* (1 - np.exp(-((x/params['alpha'][0])**params['beta'][0]))) 
+            y_pred = gamma + (1-lamb-gamma)* (1 - np.exp(-((x/params['alpha'][0])**params['beta'][0])))
         fig,ax = plt.subplots(1,1)
         ax.scatter(data.x,data.y)
         ax.plot(x,y_pred)  
