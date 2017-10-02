@@ -14,7 +14,7 @@ Bayesian Psychometric Curve Fitting tool using STAN
 
 Important links
 ---------------
-- Use documentation: https://slugocm.ca/BayesFit or see below.
+- Use documentation: **COMING SOON**
 - Source code repository: https://github.com/slugocm/bayesfit
 - Issue tracker: https://github.com/slugocm/bayesfit/issues
 
