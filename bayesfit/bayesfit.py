@@ -41,6 +41,14 @@ def bayesfit_build(data, options):
     if options['sigmoidType'] in ['weibull']:
         assert data.x.min() > 0, 'The sigmoid you specified is not defined for negative data points!'
 
+    # Check options provided 
+    if options['fit'] != 'auto' and 'manual' == False:
+        assert False, 'Options provided are not those made available by module. Revise options provided.'
+    if options['lapse'] != True and False == False:
+        assert False, 'Options provided are not those made available by module. Revise options provided.'        
+    if options['sigmoidType'] != 'cnorm' and 'logistic' and 'cauchy' and 'gumbel' and 'weibull' == False:
+        assert False, 'Options provided are not those made available by module. Revise options provided.'                
+        
     # File that performs main computation
     output = bayesfit_compile(data,options)
         
@@ -167,6 +175,12 @@ def bayesfit(data, options, model):
     if not('chains' in options.keys()):
         options['chains'] = 2  
     
+    # Check options provided are numerical
+    if isinstance(options['iter'], (int, float, complex)) == False:
+        assert False, 'Please provide a numerical argument for options["iter"].'    
+    if isinstance(options['chains'], (int, float, complex)) == False:
+        assert False, 'Please provide a numerical argument for options["chains"].'
+    
     # Convert from average to numerical 1 and 0 sequence
     df = pd.DataFrame([],columns=['x','y']) 
     for i in range(len(data.x)):
@@ -194,6 +208,12 @@ def bayesfit_extract(data, fit, options):
         options['param_ests'] = 'mean'
     if not('thresholdPC' in options.keys()):
         options['thresholdPC'] = .75
+        
+    # Check arguments provided are numerical for threshold 
+    if options['param_ests'] != 'mean' == False:
+        assert False, 'Options provided are not those made available by module. Revise options provided.'
+    if isinstance(options['thresholdPC'], (int, float, complex)) == False:
+        assert False, 'Please provide a numerical argument for options["thresholdPC"].'
 
     if options['nAFC'] == 0:
         gamma = 0
@@ -226,6 +246,9 @@ def bayesfit_plot(data, fit, params, options):
     
     if not('plot' in options.keys()):
         options['plot'] = 'cdf'
+        
+    if options['plot'] != 'cdf' and 'density' and '2D_density' and 'trace' == False:
+        assert False, 'Options for PLOT provided are not those made available by module. Revise options provided.'
         
     # Get parameter labels
     x_labels = list(params.columns.values)  
