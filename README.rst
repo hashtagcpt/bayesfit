@@ -77,6 +77,7 @@ Unfortuntely, there are some compiler errors that may arise when running the Bay
 Now under your Anaconda directory go to **.../Anaconda3/Lib/distutils/** folder and see if a file labelled **distutils.cfg** exists.  If not, create such a file under this directory with the following code:
 
 ::
+
     [build]
     compiler=mingw32
 
