@@ -36,6 +36,11 @@ Packages required (versions specified in requirements.txt):
 `Seaborn <https://seaborn.pydata.org/>`_
 `StatsModels <www.statsmodels.org/stable/index.html>`_
 
+To install required packages if the versions are out of date, or not installed in your working environment, first download the **requirements.txt** file in this repository.  Then navigate to the directory that contains the downloaded text file using the command-prompt.  Then type: 
+
+::
+
+   pip install -r requirements.txt
 
 **RECOMMENDED:** BayesFit and required packages may be installed from the `Python Package Index
 <https://pypi.python.org/pypi>`_ using ``pip``.
