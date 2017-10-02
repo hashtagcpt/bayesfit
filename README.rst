@@ -29,11 +29,11 @@ Basic Installation [Linux/ Windows/ macOS]
 **WINDOWS USERS:** 
 **PLEASE READ ADDITIONAL INSTALLATION INSTRUCTIONS TO SAVE YOU HEADACHES!**
 
-Packages required: 
-- `PyStan <http://mc-stan.org/users/interfaces/pystan>`_
-- `Scipy <https://www.scipy.org/>`_
-- `Pandas <http://pandas.pydata.org/>`_
-- `seaborn <https://seaborn.pydata.org/>`_
+Packages required (versions specified in requirements.txt): 
+    - `PyStan <http://mc-stan.org/users/interfaces/pystan>`_
+    - `Scipy <https://www.scipy.org/>`_
+    - `Pandas <http://pandas.pydata.org/>`_
+    - `seaborn <https://seaborn.pydata.org/>`_
 
 
 **RECOMMENDED:** BayesFit and required packages may be installed from the `Python Package Index
