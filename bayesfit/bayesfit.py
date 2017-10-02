@@ -12,7 +12,7 @@ import scipy as sc
 import pystan as ps 
 import pandas as pd
 import seaborn as sns
-import matplotlib.pylot as plt
+import matplotlib.pyplot as plt
 
 # Define wrapper function
 def bayesfit_build(data, options):
@@ -48,7 +48,7 @@ def bayesfit_build(data, options):
 
 
 # Define core fitting 
-def bayesfit_compile(data, options):
+def bayesfit_compile(data, options, model_definition=dict()):
     
     if not('model_definition' in locals()):
         if options['fit'] == 'auto':
@@ -188,12 +188,17 @@ def bayesfit(data, options, model):
 
 
 
-def bayesfit_extract(fit, options):
+def bayesfit_extract(data, fit, options):
     
     if not('param_ests' in options.keys()):
         options['param_ests'] = 'mean'
     if not('thresholdPC' in options.keys()):
         options['thresholdPC'] = .75
+
+    if options['nAFC'] == 0:
+        gamma = 0
+    else:
+        gamma = 1/options['nAFC']
     # Extract summary table
     fit_summary = fit.summary()
     # Extract summary of mean estimates for parameters
@@ -262,8 +267,8 @@ def bayesfit_plot(data, fit, params, options):
         fig.tight_layout()
         plt.show()
     elif options['plot'] == '2D_density':
-        temp_frame = pd.DataFrame(samples,columns=x_labels) 
         samples = fit.extract()
+        temp_frame = pd.DataFrame(samples,columns=x_labels) 
         fig = sns.jointplot(x = x_labels[0],y = x_labels[1],data=temp_frame, kind="kde")
         plt.show()
     elif options['plot'] == 'trace':
@@ -277,3 +282,16 @@ def bayesfit_plot(data, fit, params, options):
         ax3.set_xlabel(x_labels[2].capitalize())
         fig.tight_layout()
         plt.show()
+
+  
+    
+    
+    
+    
+    
+    
+
+
+    
+    
+  

@@ -1,1 +1,1 @@
-from X import Y 
+from bayesfit import * 
