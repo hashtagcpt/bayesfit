@@ -20,7 +20,7 @@ Important links
 - Stan User's Guide and Reference Manual (pdf) available at http://mc-stan.org
 
 
-Basic Installation [OSX/ WINDOWS]
+Basic Installation [Linux/ WINDOWS/ OSX]
 ------------------
 
 Packages required: 
