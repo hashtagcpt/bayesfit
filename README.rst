@@ -24,10 +24,10 @@ Basic Installation [Linux/ Windows/ macOS]
 ------------------
 
 Packages required: 
-`PyStan <http://mc-stan.org/users/interfaces/pystan>`_
-`Scipy <https://www.scipy.org/>`_
-`Pandas <http://pandas.pydata.org/>`_
-`seaborn <https://seaborn.pydata.org/>`_
+- `PyStan <http://mc-stan.org/users/interfaces/pystan>`_
+- `Scipy <https://www.scipy.org/>`_
+- `Pandas <http://pandas.pydata.org/>`_
+- `seaborn <https://seaborn.pydata.org/>`_
 
 
 **RECOMMENDED:** BayesFit and required packages may be installed from the `Python Package Index
