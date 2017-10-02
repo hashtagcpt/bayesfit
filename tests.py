@@ -7,8 +7,14 @@ Created on Fri Sep 29 21:21:23 2017
 
 import bayesfit as bayesfit
 import pandas as pd
+import pytest 
 
+
+i = 5
 # Import data as data frame into working environment using pandas
+def test_multiply()
+  assert i<0, 'Something went wrong'
+
 data = pd.read_csv('data.csv')
 
 # Initialize options variable as dictionary type
