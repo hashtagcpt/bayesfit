@@ -64,6 +64,8 @@ def bayesfit_compile(data, options, model_definition=dict()):
         elif options['fit'] == 'manual':
             assert False, 'Manual fit option chosen!  Need to provide full model definition!'
     
+    if not('nAFC' in options.keys()):
+        options['nAFC'] = 2
     
     if options['fit'] == 'auto':
         
@@ -208,7 +210,9 @@ def bayesfit_extract(data, fit, options):
         options['param_ests'] = 'mean'
     if not('thresholdPC' in options.keys()):
         options['thresholdPC'] = .75
-        
+    if not('nAFC' in options.keys()):
+        options['nAFC'] = 2
+
     # Check arguments provided are numerical for threshold 
     if options['param_ests'] != 'mean' == False:
         assert False, 'Options provided are not those made available by module. Revise options provided.'
@@ -246,7 +250,9 @@ def bayesfit_plot(data, fit, params, options):
     
     if not('plot' in options.keys()):
         options['plot'] = 'cdf'
-        
+    if not('nAFC' in options.keys()):
+        options['nAFC'] = 2 
+    
     if options['plot'] != 'cdf' and 'density' and '2D_density' and 'trace' == False:
         assert False, 'Options for PLOT provided are not those made available by module. Revise options provided.'
         
