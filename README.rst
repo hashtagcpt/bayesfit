@@ -26,7 +26,7 @@ Important links
 Basic Installation [Linux/ Windows/ macOS]
 ------------------
 
-** WINDOWS USERS ARE STRONGLY ENCOURAGED TO READ ADDITIONAL INSTALLATION INSTRUCTIONS TO SAV YOU HEADACHES! **
+**WINDOWS USERS ARE STRONGLY ENCOURAGED TO READ ADDITIONAL INSTALLATION INSTRUCTIONS TO SAV YOU HEADACHES!**
 
 Packages required: 
 - `PyStan <http://mc-stan.org/users/interfaces/pystan>`_
