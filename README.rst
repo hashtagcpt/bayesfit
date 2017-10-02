@@ -57,22 +57,6 @@ Additional installation instructions [Windows]
 
 
 
-Example 
-------------------
-.. code-block:: python
-
-    # Import data as data frame into working environment using pandas
-    data = pd.read_csv('data.csv')
-    
-    # Initialize options variable as dictionary type
-    options = dict()
-    
-    model = bayesfit_build(data, options)
-    fit = bayesfit(data,options,model)
-    params,threshold = bayesfit_extract(fit,options)
-    bayesfit_plot(data,fit,params,options)  
-
-
 .. |pypi| image:: https://badge.fury.io/py/bayesfit.png
     :target: https://badge.fury.io/py/bayesfit
     :alt: pypi version
