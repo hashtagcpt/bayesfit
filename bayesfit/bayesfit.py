@@ -172,7 +172,7 @@ def bayesfit_compile(data, options, model_definition=dict()):
     
     
     
-def bayesfit(data, options, model):
+def bayesfit_fit(data, options, model):
     
     if not('iter' in options.keys()):
         options['iter'] = 5000
@@ -237,18 +237,18 @@ def bayesfit_extract(data, options, fit):
     else:
         gamma = 1/options['nAFC']
 
-    # Define lambda
-    if options['lapse'] == True:
-        lamb = params['lambda'][0]
-    elif: options['lapse'] == False:
-        lamb = 0
-
     # Extract summary table
     fit_summary = fit.summary()
     # Extract summary of mean estimates for parameters
-    params = pd.DataFrame([fit_summary['summary'][:,0]],columns=fit_summary['summary_rownames']) 
+    params = pd.DataFrame([fit_summary['summary'][:,0]],columns=fit_summary['summary_rownames'])
     
-    # Extract threshold 
+    # Define lambda
+    if options['lapse'] == True:
+        lamb = params['lambda'][0]
+    elif options['lapse'] == False:
+        lamb = 0
+    
+    # Extract threshold
     x = np.linspace(data.x.min(),data.x.max(),1000)
     if options['sigmoidType'] == 'cnorm':  
         y_pred = gamma + (1-lamb-gamma)*sc.stats.norm.cdf(x,params['mu'][0],params['sigma'][0])
@@ -298,10 +298,11 @@ def bayesfit_plot(data, options, fit, params):
     # Define lambda
     if options['lapse'] == True:
         lamb = params['lambda'][0]
-    elif: options['lapse'] == False:
+    elif options['lapse'] == False:
         lamb = 0
 
     if options['plot'] == 'cdf':
+        sns.set(color_codes=True)
         x = np.linspace(data.x.min(),data.x.max(),1000)
         if options['sigmoidType'] == 'cnorm':  
             y_pred = gamma + (1-lamb-gamma)*sc.stats.norm.cdf(x,params['mu'][0],params['sigma'][0])
@@ -332,11 +333,13 @@ def bayesfit_plot(data, options, fit, params):
         fig.tight_layout()
         plt.show()
     elif options['plot'] == '2D_density':
+        sns.set(color_codes=True)
         samples = fit.extract()
         temp_frame = pd.DataFrame(samples,columns=x_labels) 
         fig = sns.jointplot(x = x_labels[0],y = x_labels[1],data=temp_frame, kind="kde")
         plt.show()
     elif options['plot'] == 'trace':
+        sns.set(color_codes=True)
         samples = fit.extract()
         fig,(ax1,ax2,ax3) = plt.subplots(3,1)
         ax1.plot(samples[x_labels[0]])
