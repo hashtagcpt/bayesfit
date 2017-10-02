@@ -9,7 +9,6 @@ Bayesian Psychometric Curve Fitting tool using STAN
 
 :Authors:
     Michael Slugocki
-:Version: 0.11 of 01/10/2017
 
 **BayesFit** provides a simple and easy to use interface to fit and plot psychometric functions by making use of pystan and Stan, which perform Bayesian inference using the No-U-Turn sampler.  
 
