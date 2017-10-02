@@ -238,9 +238,9 @@ def bayesfit_extract(data, options, fit):
         gamma = 1/options['nAFC']
 
     # Define lambda
-    if options['lapse'] = True:
+    if options['lapse'] == True:
         lamb = params['lambda'][0]
-    elif: options['lapse'] = False:
+    elif: options['lapse'] == False:
         lamb = 0
 
     # Extract summary table
@@ -296,9 +296,9 @@ def bayesfit_plot(data, options, fit, params):
         gamma = 1/options['nAFC']
 
     # Define lambda
-    if options['lapse'] = True:
+    if options['lapse'] == True:
         lamb = params['lambda'][0]
-    elif: options['lapse'] = False:
+    elif: options['lapse'] == False:
         lamb = 0
 
     if options['plot'] == 'cdf':
