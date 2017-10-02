@@ -54,7 +54,6 @@ Additional installation instructions [Windows]
 Example 
 ------------------
 .. code-block:: python
-   :linenos:
 
     # Import data as data frame into working environment using pandas
     data = pd.read_csv('data.csv')
