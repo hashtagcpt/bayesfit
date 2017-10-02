@@ -66,6 +66,9 @@ to:
     #     extra_compile_args = ['/EHsc', '-DBOOST_DATE_TIME_NO_LIB']
 
 
+
+Unfortuntely, there are some compiler errors that may arise when running the BayesFit with Python on windows.  These errors mainly arise from pystan, and its requirement for compiling models in C++ code for use with Stan.  Please carefully follow the steps below, and ensure you are using Python version 3.5 or newer. The first steps also make use of Anaconda Python distribution environment. In your command-prompt, or Anaconda prompt type: 
+
 ::
 
     conda install libpython
