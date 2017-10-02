@@ -33,7 +33,8 @@ Packages required (versions specified in requirements.txt):
 `PyStan <http://mc-stan.org/users/interfaces/pystan>`_
 `Scipy <https://www.scipy.org/>`_
 `Pandas <http://pandas.pydata.org/>`_
-`seaborn <https://seaborn.pydata.org/>`_
+`Seaborn <https://seaborn.pydata.org/>`_
+`StatsModels <www.statsmodels.org/stable/index.html>`_
 
 
 **RECOMMENDED:** BayesFit and required packages may be installed from the `Python Package Index
