@@ -23,6 +23,8 @@ Important links
 Basic Installation [Linux/ Windows/ macOS]
 ------------------
 
+.. warning:: Windows users should also read additional installation instructions below!
+
 Packages required: 
 - `PyStan <http://mc-stan.org/users/interfaces/pystan>`_
 - `Scipy <https://www.scipy.org/>`_
