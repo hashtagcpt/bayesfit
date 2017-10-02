@@ -60,7 +60,11 @@ Example
     
     # Initialize options variable as dictionary type
     options = dict()
-
+    
+    model = bayesfit_build(data, options)
+    fit = bayesfit(data,options,model)
+    params,threshold = bayesfit_extract(fit,options)
+    bayesfit_plot(data,fit,params,options)  
 
 
 .. |pypi| image:: https://badge.fury.io/py/bayesfit.png
