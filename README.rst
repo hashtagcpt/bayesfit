@@ -30,7 +30,7 @@ Packages required:
 `seaborn <https://seaborn.pydata.org/>`_
 
 
-RECOMMENDED: BayesFit and required packages may be installed from the `Python Package Index
+**RECOMMENDED:** BayesFit and required packages may be installed from the `Python Package Index
 <https://pypi.python.org/pypi>`_ using ``pip``.
 
 ::
