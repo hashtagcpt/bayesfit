@@ -1,1 +1,1 @@
-from bayesfit import * 
+from .bayesfit import *
