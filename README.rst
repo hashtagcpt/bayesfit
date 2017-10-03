@@ -95,6 +95,6 @@ Try running the basic demo script now.  If you receive an error along the lines 
     :target: https://badge.fury.io/py/bayesfit
     :alt: pypi version
     
-.. |travis| image:: https://travis-ci.org/slugocm/bayesfit.png?branch=master
-    :target: https://travis-ci.org/slugocm/bayesfit
+.. |travis| image:: https://travis-ci.org/SlugocM/bayesfit.svg?branch=master
+    :target: https://travis-ci.org/SlugocM/bayesfit/
     :alt: travis-ci build status
