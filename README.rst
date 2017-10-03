@@ -5,7 +5,7 @@ Bayesian Psychometric Curve Fitting tool using PyStan and Stan
     :alt: BayesFit Logo
     :scale: 50 %
 
-|pypi|
+|pypi| |travis|
 
 :Authors:
     Michael Slugocki
