@@ -1,4 +1,4 @@
-Bayesian Psychometric Curve Fitting tool using STAN
+Bayesian Psychometric Curve Fitting tool using PtStan and Stan
 ====================================
 
 .. image:: https://github.com/SlugocM/bayesfit/blob/master/logos/logo.png
