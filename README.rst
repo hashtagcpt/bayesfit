@@ -110,7 +110,8 @@ Simply type:
 Release Notes
 ------------------
 
-Release 1.21 (Stable release)
+Release 1.21 (Stable release):
+
 - Fixes issue with using float numbers in vector of stimulus intensity.
 - Default value for "chains" parameter now set to 1 to avoi parallel computing issues for Windows users.
 - Removed gumbel distribution function until future release.
