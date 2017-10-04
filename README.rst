@@ -96,6 +96,15 @@ Now under your Anaconda directory go to **.../Anaconda3/Lib/distutils/** folder 
 Try running the basic demo script now.  If you receive an error along the lines of **"MS VS COMPILER ..."**, please follow this final step. Under the earlier directory **.../Anaconda3/Lib/distutils/** locate a file **cygwinccompiler.py**, and comment out lines: 157; 160; 325.  Save the file, and restart your Python session.  Everything should work now.    
 
 
+Upgrading BayesFit
+------------------
+
+Simply type: 
+
+::
+
+    pip install bayesfit -U
+
 
 .. |pypi| image:: https://badge.fury.io/py/bayesfit.png
     :target: https://badge.fury.io/py/bayesfit
