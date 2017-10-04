@@ -12,7 +12,7 @@ Bayesian Psychometric Curve Fitting tool using PyStan and Stan
    
 --------------------------------------------------  
   
-**IMPORTANT** : **Version 1.16** will be released later today that fixes issues with using decimal values in stimulus intensities, along with some of the plotting functions. Please upgrade from 1.15 upon release!
+**IMPORTANT** : **Version 1.21** has been released!  This version fixes issues with using decimal values in stimulus intensities, along with some of the plotting functions. Please upgrade from 1.15 release if you have not already!
 
 --------------------------------------------------
 
@@ -106,6 +106,15 @@ Simply type:
 
     pip install bayesfit -U
 
+
+Release Notes
+------------------
+
+Release 1.21 (Stable release)
+- Fixes issue with using float numbers in vector of stimulus intensity.
+- Default value for "chains" parameter now set to 1 to avoi parallel computing issues for Windows users.
+- Removed gumbel distribution function until future release.
+- Corrected numerous issues with plotting functions, especially the density plot
 
 .. |pypi| image:: https://badge.fury.io/py/bayesfit.png
     :target: https://badge.fury.io/py/bayesfit
