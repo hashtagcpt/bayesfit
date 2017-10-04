@@ -23,6 +23,7 @@ Important links
 - Use documentation: https://github.com/SlugocM/bayesfit/blob/master/documentation/BayesFit%20Documentation.ipynb
 - Source code repository: https://github.com/slugocm/bayesfit
 - Issue tracker: https://github.com/slugocm/bayesfit/issues
+- For latest update on new version releases, follow me on twitter: https://twitter.com/SlugocM
 
 - pystan documentation: https://pystan.readthedocs.org
 - Stan: http://mc-stan.org/
