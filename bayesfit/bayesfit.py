@@ -30,7 +30,7 @@ def bayesfit_build(data, options):
     else:
         options = deepcopy(options)
     if not('sigmoidType' in options.keys()):
-        options['sigmoidType'] = 'weibull'
+        options['sigmoidType'] = 'cnorm'
     if not('nAFC' in options.keys()):
         options['nAFC'] = 2
     if not('lapse' in options.keys()):
@@ -46,7 +46,7 @@ def bayesfit_build(data, options):
         assert False, 'Options provided are not those made available by module. Revise options provided.'
     if options['lapse'] != True and False == False:
         assert False, 'Options provided are not those made available by module. Revise options provided.'        
-    if options['sigmoidType'] != 'cnorm' and 'logistic' and 'cauchy' and 'gumbel' and 'weibull' == False:
+    if options['sigmoidType'] != 'cnorm' and 'logistic' and 'cauchy' and 'weibull' == False:
         assert False, 'Options provided are not those made available by module. Revise options provided.'                
     if isinstance(options['nAFC'], (int, float, complex)) == False:
         assert False, 'Please provide a numerical argument for options["nAFC"].'
@@ -92,7 +92,7 @@ def bayesfit_compile(data, options, model_definition=dict()):
         model_definition['data'] = '''
             data {
             int<lower=1> N;
-            vector[N] x;
+            real x[N];
             int<lower=0,upper=1> y[N];
             }'''    
         
@@ -103,7 +103,7 @@ def bayesfit_compile(data, options, model_definition=dict()):
                 real<lower=0> mu;
                 real<lower=0> sigma; '''
             model_definition['likelihood_scale'] = ('''model {mu ~ normal(%f,3);''' %(scale_guess))
-            model_definition['likelihood_shape'] = '''sigma ~ normal(3,5);'''
+            model_definition['likelihood_shape'] = '''sigma ~ uniform(0,9);'''
             model_definition['likelihood_model_pt2'] = ''' *normal_cdf(x[i],mu, sigma));}} '''  
     
         elif options['sigmoidType'] == 'logistic':    
@@ -112,7 +112,7 @@ def bayesfit_compile(data, options, model_definition=dict()):
                 real<lower=0> mu;
                 real<lower=0> sigma; '''
             model_definition['likelihood_scale'] = ('''model {mu ~ normal(%f,3);''' %(scale_guess))
-            model_definition['likelihood_shape'] = '''sigma ~ normal(3,5);'''
+            model_definition['likelihood_shape'] = '''sigma ~ uniform(0,9);'''
             model_definition['likelihood_model_pt2'] = ''' *logistic_cdf(x[i],mu, sigma));}} '''  
     
         elif options['sigmoidType'] == 'cauchy':    
@@ -121,25 +121,25 @@ def bayesfit_compile(data, options, model_definition=dict()):
                 real<lower=0> mu;
                 real<lower=0> sigma; '''
             model_definition['likelihood_scale'] = ('''model {mu ~ normal(%f,3);''' %(scale_guess))
-            model_definition['likelihood_shape'] = '''sigma ~ normal(3,5);'''
+            model_definition['likelihood_shape'] = '''sigma ~ uniform(0,9);'''
             model_definition['likelihood_model_pt2'] = ''' *cauchy_cdf(x[i],mu, sigma));}} '''  
     
-        elif options['sigmoidType'] == 'gumbel':    
-            model_definition['parameters_pt1'] = '''
-                parameters {
-                real<lower=0> mu;
-                real<lower=0> beta; '''
-            model_definition['likelihood_scale'] = ('''model {mu ~ normal(%f,3);''' %(scale_guess))
-            model_definition['likelihood_shape'] = '''beta ~ normal(3,5);'''
-            model_definition['likelihood_model_pt2'] = ''' *gumbel_cdf(x[i],mu, beta));}} ''' 
-    
+#        elif options['sigmoidType'] == 'gumbel':    
+#            model_definition['parameters_pt1'] = '''
+#                parameters {
+#                real<lower=0> mu;
+#                real<lower=0> beta; '''
+#            model_definition['likelihood_scale'] = ('''model {mu ~ normal(%f,3);''' %(scale_guess))
+#            model_definition['likelihood_shape'] = '''beta ~ uniform(0,9);'''
+#            model_definition['likelihood_model_pt2'] = ''' *gumbel_cdf(x[i],mu, beta));}} ''' 
+#    
         elif options['sigmoidType'] == 'weibull':
             model_definition['parameters_pt1'] = '''
                 parameters {
                 real<lower=0> alpha;
                 real<lower=0> beta; '''
             model_definition['likelihood_scale'] = ('''model {alpha ~ normal(%f,3);''' %(scale_guess))
-            model_definition['likelihood_shape'] = '''beta ~ normal(3,5);'''
+            model_definition['likelihood_shape'] = '''beta ~ uniform(0,9);'''
             model_definition['likelihood_model_pt2'] = ''' *weibull_cdf(x[i],beta, alpha));}} '''
 
         # DEFINE LAPSE SPECIFIC STRUCTURES AND LIKELIHOOD FUNCTIONS
@@ -177,7 +177,7 @@ def bayesfit_fit(data, options, model):
     if not('iter' in options.keys()):
         options['iter'] = 5000
     if not('chains' in options.keys()):
-        options['chains'] = 2  
+        options['chains'] = 1  
     
     # Check options provided are numerical
     if isinstance(options['iter'], (int, float, complex)) == False:
@@ -196,7 +196,7 @@ def bayesfit_fit(data, options, model):
         df = df.append(tmp_df)
     
     # Convert data frame above to list 
-    x = [int(i) for i in pd.Series.tolist(df.x)]
+    x = [float(i) for i in pd.Series.tolist(df.x)]
     y = [int(i) for i in pd.Series.tolist(df.y)]
     data_model= {'N': len(df.x),'x': x,'y': y}
 
@@ -215,7 +215,7 @@ def bayesfit_extract(data, options, fit):
     if not('nAFC' in options.keys()):
         options['nAFC'] = 2
     if not('sigmoidType' in options.keys()):
-        options['sigmoidType'] = 'weibull'
+        options['sigmoidType'] = 'cnorm'
     if not('lapse' in options.keys()):
         options['lapse'] = True
     
@@ -226,7 +226,7 @@ def bayesfit_extract(data, options, fit):
         assert False, 'Please provide a numerical argument for options["thresholdPC"].'
     if isinstance(options['nAFC'], (int, float, complex)) == False:
         assert False, 'Please provide a numerical argument for options["nAFC"].'
-    if options['sigmoidType'] != 'cnorm' and 'logistic' and 'cauchy' and 'gumbel' and 'weibull' == False:
+    if options['sigmoidType'] != 'cnorm' and 'logistic' and 'cauchy' and 'weibull' == False:
         assert False, 'Options provided are not those made available by module. Revise options provided.'
     if options['lapse'] != True and False == False:
         assert False, 'Options provided are not those made available by module. Revise options provided.'
@@ -255,9 +255,9 @@ def bayesfit_extract(data, options, fit):
     elif options['sigmoidType'] == 'cauchy': 
         y_pred = gamma + (1-lamb-gamma)*sc.stats.cauchy.cdf(x,params['mu'][0],params['sigma'][0])
     elif options['sigmoidType'] == 'logistic':    
-        y_pred = gamma + (1-lamb-gamma)*sc.stats.logistic.cdf(x,params['mu'][0],params['sigma'][0])
-    elif options['sigmoidType'] == 'gumbel':
-        y_pred = gamma + (1-lamb-gamma)*(1-np.exp(10**(params['beta'][0]*(x - params['mu'][0]) )))
+        y_pred = gamma + (1-lamb-gamma)*(1 / (1 + np.exp(-(x- params['mu'][0])/params['sigma'][0] )))
+#    elif options['sigmoidType'] == 'gumbel':
+#        y_pred = gamma + (1-lamb-gamma)*(1-np.exp(-10**(params['beta'][0]*(x - params['mu'][0]) )))
     elif options['sigmoidType'] == 'weibull':    
         y_pred = gamma + (1-lamb-gamma)* (1 - np.exp(-((x/params['alpha'][0])**params['beta'][0])))
     
@@ -273,7 +273,7 @@ def bayesfit_plot(data, options, fit, params):
     if not('nAFC' in options.keys()):
         options['nAFC'] = 2
     if not('sigmoidType' in options.keys()):
-        options['sigmoidType'] = 'weibull'
+        options['sigmoidType'] = 'cnorm'
     if not('lapse' in options.keys()):
         options['lapse'] = True
 
@@ -309,9 +309,9 @@ def bayesfit_plot(data, options, fit, params):
         elif options['sigmoidType'] == 'cauchy': 
             y_pred = gamma + (1-lamb-gamma)*sc.stats.cauchy.cdf(x,params['mu'][0],params['sigma'][0])
         elif options['sigmoidType'] == 'logistic':    
-            y_pred = gamma + (1-lamb-gamma)*sc.stats.logistic.cdf(x,params['mu'][0],params['sigma'][0])
-        elif options['sigmoidType'] == 'gumbel':
-            y_pred = gamma + (1-lamb-gamma)*(1-np.exp(10**(params['beta'][0]*(x - params['mu'][0]) )))
+            y_pred = gamma + (1-lamb-gamma)*(1 / (1 + np.exp(-(x- params['mu'][0])/params['sigma'][0] )))
+#        elif options['sigmoidType'] == 'gumbel':
+#            y_pred = gamma + (1-lamb-gamma)*(1-np.exp(-10**(params['beta'][0]*(x - params['mu'][0]) )))
         elif options['sigmoidType'] == 'weibull':    
             y_pred = gamma + (1-lamb-gamma)* (1 - np.exp(-((x/params['alpha'][0])**params['beta'][0])))
         fig,ax = plt.subplots(1,1)
@@ -324,12 +324,13 @@ def bayesfit_plot(data, options, fit, params):
         sns.set(color_codes=True)
         samples = fit.extract()
         fig,(ax1,ax2,ax3) = plt.subplots(3,1)
-        sns.distplot(samples['alpha'],ax=ax1)
+        sns.distplot(samples[x_labels[0]],ax=ax1)
         ax1.set(ylabel='Frequency', xlabel=x_labels[0].capitalize())
-        sns.distplot(samples['beta'],ax=ax2)
+        sns.distplot(samples[x_labels[1]],ax=ax2)
         ax2.set(ylabel='Frequency', xlabel=x_labels[1].capitalize())
-        sns.distplot(samples['lambda'],ax=ax3)
-        ax3.set(ylabel='Frequency', xlabel=x_labels[2].capitalize())
+        if options['lapse'] == True:
+            sns.distplot(samples['lambda'],ax=ax3)
+            ax3.set(ylabel='Frequency', xlabel=x_labels[2].capitalize())
         fig.tight_layout()
         plt.show()
     elif options['plot'] == '2D_density':
