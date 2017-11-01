@@ -8,14 +8,15 @@ Created on Tue Oct  3 14:03:30 2017
 import pandas as pd
 import bayesfit as bf
 
-# Generate test data 
-x = [1, 2, 3, 4, 5, 6, 7]
-y = [0.01, 0.08, 0.2, 0.45, 0.75, 0.89, 0.98]
-N = [20, 20, 20, 20, 20, 20, 20]
-data = pd.DataFrame({'x':x, 'y':y, 'N':N})
 
 
-def _normal(data):
+
+def _normal():
+    # Generate test data 
+    x = [1, 2, 3, 4, 5, 6, 7]
+    y = [0.01, 0.08, 0.2, 0.45, 0.75, 0.89, 0.98]
+    N = [20, 20, 20, 20, 20, 20, 20]
+    data = pd.DataFrame({'x':x, 'y':y, 'N':N})
     # Initialize options variable as dictionary type
     options = dict()
     # Determines the value of gamma (guess rate) to which the function is fit (default = 2)
@@ -32,7 +33,12 @@ def _normal(data):
     success = 1
     return success
 
-def _logistic(data):
+def _logistic():
+    # Generate test data 
+    x = [1, 2, 3, 4, 5, 6, 7]
+    y = [0.01, 0.08, 0.2, 0.45, 0.75, 0.89, 0.98]
+    N = [20, 20, 20, 20, 20, 20, 20]
+    data = pd.DataFrame({'x':x, 'y':y, 'N':N})
     # Initialize options variable as dictionary type
     options = dict()
     # Determines the value of gamma (guess rate) to which the function is fit (default = 2)
@@ -49,7 +55,12 @@ def _logistic(data):
     success = 1
     return success
 
-def _cauchy(data):
+def _cauchy():
+    # Generate test data 
+    x = [1, 2, 3, 4, 5, 6, 7]
+    y = [0.01, 0.08, 0.2, 0.45, 0.75, 0.89, 0.98]
+    N = [20, 20, 20, 20, 20, 20, 20]
+    data = pd.DataFrame({'x':x, 'y':y, 'N':N})
     # Initialize options variable as dictionary type
     options = dict()
     # Determines the value of gamma (guess rate) to which the function is fit (default = 2)
@@ -66,7 +77,12 @@ def _cauchy(data):
     success = 1
     return success
 
-def _weibull(data):
+def _weibull():
+    # Generate test data 
+    x = [1, 2, 3, 4, 5, 6, 7]
+    y = [0.01, 0.08, 0.2, 0.45, 0.75, 0.89, 0.98]
+    N = [20, 20, 20, 20, 20, 20, 20]
+    data = pd.DataFrame({'x':x, 'y':y, 'N':N})
     # Initialize options variable as dictionary type
     options = dict()
     # Determines the value of gamma (guess rate) to which the function is fit (default = 2)
@@ -85,14 +101,14 @@ def _weibull(data):
 
 
 
-def test_normal(data):
-    assert _normal(data) == 1
+def test_normal():
+    assert _normal() == 1
 
-def test_logistic(data):
-    assert _logistic(data) == 1
+def test_logistic():
+    assert _logistic() == 1
     
-def test_cauchy(data):
-    assert _cauchy(data) == 1
+def test_cauchy():
+    assert _cauchy() == 1
     
-def test_weibull(data):
-    assert _weibull(data) == 1
+def test_weibull(ata):
+    assert _weibull() == 1
