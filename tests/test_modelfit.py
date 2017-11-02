@@ -110,5 +110,5 @@ def test_logistic():
 def test_cauchy():
     assert _cauchy() == 1
     
-def test_weibull(ata):
+def test_weibull():
     assert _weibull() == 1
