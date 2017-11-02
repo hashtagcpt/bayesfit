@@ -10,9 +10,6 @@ Bayesian Psychometric Curve Fitting tool using PyStan and Stan
 :Authors:
     Michael Slugocki
    
---------------------------------------------------  
-  
-**IMPORTANT** : **Version 1.21** has been released!  This version fixes issues with using decimal values in stimulus intensities, along with some of the plotting functions. Please upgrade from 1.15 release if you have not already!
 
 --------------------------------------------------
 
